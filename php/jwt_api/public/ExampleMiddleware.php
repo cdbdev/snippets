@@ -26,22 +26,24 @@ class ExampleMiddleware
 					
 					return $next($request, $response);
 				} else {
-					$response->getBody()->write('Token not found!');
+					//$response->getBody()->write('Token not found!');
+					return $response->withStatus(401);
 				}
 			} else {
-				$response->getBody()->write('No Authorization Header found!');
+				//$response->getBody()->write('No Authorization Header found!');
+				return $response->withStatus(401);
 			}
 			
 			return $response;
 		} catch(Firebase\JWT\BeforeValidException $e) {
-			$response->getBody()->write('BeforeValidException');
-			return $response;
+			//$response->getBody()->write('BeforeValidException');
+			return $response->withStatus(401);			
 		} catch(Firebase\JWT\SignatureInvalidException $e) {
-			$response->getBody()->write('SignatureInvalidException');
-			return $response;
+			//$response->getBody()->write('SignatureInvalidException');
+			return $response->withStatus(401);			
 		} catch(\Firebase\JWT\ExpiredException $e){
-			 $response->getBody()->write('ExpiredException');
-			 return $response;
+			 //$response->getBody()->write('ExpiredException');
+			 return $response->withStatus(401);			 
 		}
     }
 }
