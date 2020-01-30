@@ -1,4 +1,6 @@
 <?php
+use \Firebase\JWT\JWT;
+
 class ExampleMiddleware
 {
     /**
@@ -18,9 +20,10 @@ class ExampleMiddleware
 			$key = "example_key";
 			$auth_header = $request->getHeader('Authorization');
 			if( count($auth_header) !== 0) {
-				$jwt = $request->getHeader('Authorization')[0];
+				$jwt = $request->getHeader('Authorization')[0];				
 				
 				if(strlen($jwt) !== 0) {
+					echo("jwt: " . $jwt);
 					$decoded = JWT::decode($jwt, $key, array('HS256'));
 					//$decoded_array = (array) $decoded;
 					
